@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f2c28255bfb6bcea507dffb39d237282 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+<div style="position:fixed;bottom:30px;left:30px;z-index:1000;
+            background:white;padding:14px 18px;border-radius:10px;
+            box-shadow:2px 2px 10px rgba(0,0,0,0.25);font-family:Arial;font-size:13px">
+    <b style="font-size:14px">Gravedad del Siniestro</b><br><br>
+    <span style="background:#FF0000;border-radius:50%;display:inline-block;width:12px;height:12px;margin-right:6px"></span>Con Muertos &nbsp;<b>(3)</b><br>
+    <span style="background:#FF8C00;border-radius:50%;display:inline-block;width:12px;height:12px;margin-right:6px;margin-top:5px"></span>Con Heridos &nbsp;<b>(31)</b><br>
+    <span style="background:#FFD700;border-radius:50%;display:inline-block;width:12px;height:12px;margin-right:6px;margin-top:5px"></span>Solo Daños &nbsp;<b>(1)</b><br>
+    <hr style="margin:8px 0">
+    <b>Total: 35 siniestros</b><br>
+    <small style="color:gray">📍 Clic en punto = detalles</small>
+</div>
+    
+<div style="position:fixed;top:10px;left:50%;transform:translateX(-50%);
+            z-index:1000;background:white;padding:8px 20px;border-radius:8px;
+            box-shadow:2px 2px 8px rgba(0,0,0,0.2);font-family:Arial">
+    <b style="font-size:15px">🚦 Siniestros Viales — Aguazul, Casanare</b>
+</div>
+    
+            <div class="folium-map" id="map_f2c28255bfb6bcea507dffb39d237282" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f2c28255bfb6bcea507dffb39d237282 = L.map(
+                "map_f2c28255bfb6bcea507dffb39d237282",
+                {
+                    center: [5.1696301714285715, -72.54523874285715],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 14,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_058d91ca33ba51281345782ce5e4fa54 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "OpenStreetMap",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_058d91ca33ba51281345782ce5e4fa54.addTo(map_f2c28255bfb6bcea507dffb39d237282);
+        
+    
+            var tile_layer_b66d2797a6874f27a0639ae52431a8f6 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var tile_layer_0320a778cf7656ae8dc4279739392820 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var heat_map_d4f12cddf20a056ca6190d24e91e1d95 = L.heatLayer(
+                [[5.16919, -72.549847], [5.177425, -72.541289], [5.171494, -72.550692], [5.170331, -72.549653], [5.173033, -72.552317], [5.178142, -72.551153], [5.179731, -72.564114], [5.1761, -72.549156], [5.170394, -72.548614], [5.182808, -72.548058], [5.173036, -72.542769], [5.171781, -72.552319], [5.169267, -72.550814], [5.1, -72.469767], [5.180556, -72.569167], [5.097447, -72.460847], [5.177297, -72.549097], [5.167625, -72.550486], [5.165947, -72.548828], [5.168864, -72.548222], [5.176506, -72.5445], [5.178092, -72.550983], [5.175556, -72.549783], [5.179769, -72.563592], [5.168131, -72.550992], [5.169981, -72.545772], [5.178464, -72.546811], [5.176506, -72.5445], [5.174533, -72.546506], [5.170589, -72.551197], [5.180936, -72.553778], [5.167642, -72.548428], [5.172658, -72.549536], [5.173256, -72.547747], [5.173969, -72.542022]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 16,
+  "radius": 25,
+  "blur": 15,
+  "gradient": {
+  0.2: "yellow",
+  0.5: "orange",
+  0.8: "red",
+  1.0: "darkred",
+},
+}
+            );
+        
+    
+            heat_map_d4f12cddf20a056ca6190d24e91e1d95.addTo(map_f2c28255bfb6bcea507dffb39d237282);
+        
+    
+            var feature_group_3516b49559cb6abc1821852a6c82427c = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_e4a137646be477f399450eb44c9ba42b = L.circleMarker(
+                [5.175556, -72.549783],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_3516b49559cb6abc1821852a6c82427c);
+        
+    
+        var popup_7b76f150c869e0ec7773604b26566ed3 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_8596ee307035b2688c7fa1eb1476585f = $(`<div id="html_8596ee307035b2688c7fa1eb1476585f" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF0000;font-size:14px">⚠ Con Muertos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0005<br>             <b>Dirección:</b> carrera 21 con calle 14<br>             <b>Fecha:</b> 2025-01-27<br>             <b>Hora:</b> 14:45:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 1<br>             <b>Heridos:</b> 0<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.175556,-72.549783"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_7b76f150c869e0ec7773604b26566ed3.setContent(html_8596ee307035b2688c7fa1eb1476585f);
+            
+        
+
+        circle_marker_e4a137646be477f399450eb44c9ba42b.bindPopup(popup_7b76f150c869e0ec7773604b26566ed3)
+        ;
+
+        
+    
+    
+            circle_marker_e4a137646be477f399450eb44c9ba42b.bindTooltip(
+                `<div>
+                     Con Muertos | carrera 21 con calle 14
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_84a847a8da6d1af2406de1abcc9c1a33 = L.circleMarker(
+                [5.172658, -72.549536],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_3516b49559cb6abc1821852a6c82427c);
+        
+    
+        var popup_ebacc473ba557718e86d6a0c7fab0f52 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_89191b3331a91972ae94df4b2cb8ee9b = $(`<div id="html_89191b3331a91972ae94df4b2cb8ee9b" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF0000;font-size:14px">⚠ Con Muertos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0015<br>             <b>Dirección:</b> carrera 18 con calle 12<br>             <b>Fecha:</b> 2025-05-05<br>             <b>Hora:</b> 22:45:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 1<br>             <b>Heridos:</b> 0<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.172658,-72.549536"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_ebacc473ba557718e86d6a0c7fab0f52.setContent(html_89191b3331a91972ae94df4b2cb8ee9b);
+            
+        
+
+        circle_marker_84a847a8da6d1af2406de1abcc9c1a33.bindPopup(popup_ebacc473ba557718e86d6a0c7fab0f52)
+        ;
+
+        
+    
+    
+            circle_marker_84a847a8da6d1af2406de1abcc9c1a33.bindTooltip(
+                `<div>
+                     Con Muertos | carrera 18 con calle 12
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4c249c9094b14204e36082106711a8fa = L.circleMarker(
+                [5.173969, -72.542022],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_3516b49559cb6abc1821852a6c82427c);
+        
+    
+        var popup_bd58903517d2051314918cc35eb376cd = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_9d0ac349b3e603c1314cacf62b949a22 = $(`<div id="html_9d0ac349b3e603c1314cacf62b949a22" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF0000;font-size:14px">⚠ Con Muertos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0017<br>             <b>Dirección:</b> carrera 12 con calle 19a<br>             <b>Fecha:</b> 2025-03-24<br>             <b>Hora:</b> 16:15:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 1<br>             <b>Heridos:</b> 0<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.173969,-72.542022"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_bd58903517d2051314918cc35eb376cd.setContent(html_9d0ac349b3e603c1314cacf62b949a22);
+            
+        
+
+        circle_marker_4c249c9094b14204e36082106711a8fa.bindPopup(popup_bd58903517d2051314918cc35eb376cd)
+        ;
+
+        
+    
+    
+            circle_marker_4c249c9094b14204e36082106711a8fa.bindTooltip(
+                `<div>
+                     Con Muertos | carrera 12 con calle 19a
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_3516b49559cb6abc1821852a6c82427c.addTo(map_f2c28255bfb6bcea507dffb39d237282);
+        
+    
+            var feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_c8dbb2e4f860884bcf5833216b8cc2c4 = L.circleMarker(
+                [5.16919, -72.549847],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_50de0e02de34447b5e9bf0f03751180b = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_32095faa57454e2eb40219619463ced3 = $(`<div id="html_32095faa57454e2eb40219619463ced3" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0001<br>             <b>Dirección:</b> Calle 9 Kra 15<br>             <b>Fecha:</b> 2026-01-03<br>             <b>Hora:</b> 13:52:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.16919,-72.549847"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_50de0e02de34447b5e9bf0f03751180b.setContent(html_32095faa57454e2eb40219619463ced3);
+            
+        
+
+        circle_marker_c8dbb2e4f860884bcf5833216b8cc2c4.bindPopup(popup_50de0e02de34447b5e9bf0f03751180b)
+        ;
+
+        
+    
+    
+            circle_marker_c8dbb2e4f860884bcf5833216b8cc2c4.bindTooltip(
+                `<div>
+                     Con Heridos | Calle 9 Kra 15
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ff2f6c963a55baeefda1e8cc0c5efb76 = L.circleMarker(
+                [5.177425, -72.541289],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_65fbf3b34b03d97651661c6e26ee99c2 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_fde411809714d52ff1288c9be3d2c97c = $(`<div id="html_fde411809714d52ff1288c9be3d2c97c" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0002<br>             <b>Dirección:</b> Kra 18 calle 20<br>             <b>Fecha:</b> 2026-01-08<br>             <b>Hora:</b> 9:28:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 0<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.177425,-72.541289"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_65fbf3b34b03d97651661c6e26ee99c2.setContent(html_fde411809714d52ff1288c9be3d2c97c);
+            
+        
+
+        circle_marker_ff2f6c963a55baeefda1e8cc0c5efb76.bindPopup(popup_65fbf3b34b03d97651661c6e26ee99c2)
+        ;
+
+        
+    
+    
+            circle_marker_ff2f6c963a55baeefda1e8cc0c5efb76.bindTooltip(
+                `<div>
+                     Con Heridos | Kra 18 calle 20
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_74eaa1a5604d13ad611ba5a0e512de01 = L.circleMarker(
+                [5.171494, -72.550692],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_4b8a2c311cc8727af25e96026a07f66b = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_e79cf4a05d7aeec19a234ee4cfb09900 = $(`<div id="html_e79cf4a05d7aeec19a234ee4cfb09900" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0003<br>             <b>Dirección:</b> Kra 18 #10-23<br>             <b>Fecha:</b> 2026-01-14<br>             <b>Hora:</b> 18:47:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 2<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.171494,-72.550692"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_4b8a2c311cc8727af25e96026a07f66b.setContent(html_e79cf4a05d7aeec19a234ee4cfb09900);
+            
+        
+
+        circle_marker_74eaa1a5604d13ad611ba5a0e512de01.bindPopup(popup_4b8a2c311cc8727af25e96026a07f66b)
+        ;
+
+        
+    
+    
+            circle_marker_74eaa1a5604d13ad611ba5a0e512de01.bindTooltip(
+                `<div>
+                     Con Heridos | Kra 18 #10-23
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d71315b5279fc97b24dd274d30a5734e = L.circleMarker(
+                [5.170331, -72.549653],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_aa959fd3806b9124aaaafe8bf381ab3a = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_0198553d4cf27d76be2c352922bfcec6 = $(`<div id="html_0198553d4cf27d76be2c352922bfcec6" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0004<br>             <b>Dirección:</b> calle 10 kra 16<br>             <b>Fecha:</b> 2026-01-15<br>             <b>Hora:</b> 3:10:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.170331,-72.549653"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_aa959fd3806b9124aaaafe8bf381ab3a.setContent(html_0198553d4cf27d76be2c352922bfcec6);
+            
+        
+
+        circle_marker_d71315b5279fc97b24dd274d30a5734e.bindPopup(popup_aa959fd3806b9124aaaafe8bf381ab3a)
+        ;
+
+        
+    
+    
+            circle_marker_d71315b5279fc97b24dd274d30a5734e.bindTooltip(
+                `<div>
+                     Con Heridos | calle 10 kra 16
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2e22891d83faef7ac0c21ff957f3f894 = L.circleMarker(
+                [5.173033, -72.552317],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_d9d7bc3711b9a094d7c397218b76ccba = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_9ae92688f020b3819d3fc89f1e4ddfbe = $(`<div id="html_9ae92688f020b3819d3fc89f1e4ddfbe" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0005<br>             <b>Dirección:</b> calle 10 kra 21<br>             <b>Fecha:</b> 2026-01-18<br>             <b>Hora:</b> 14:10:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.173033,-72.552317"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_d9d7bc3711b9a094d7c397218b76ccba.setContent(html_9ae92688f020b3819d3fc89f1e4ddfbe);
+            
+        
+
+        circle_marker_2e22891d83faef7ac0c21ff957f3f894.bindPopup(popup_d9d7bc3711b9a094d7c397218b76ccba)
+        ;
+
+        
+    
+    
+            circle_marker_2e22891d83faef7ac0c21ff957f3f894.bindTooltip(
+                `<div>
+                     Con Heridos | calle 10 kra 21
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d77d956c95e6e7c88eb1b8fd2033251f = L.circleMarker(
+                [5.178142, -72.551153],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_1527aa707f4318e939b1fe6c634b9dad = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_cb009b385f895db9ca5b4d8265d8385b = $(`<div id="html_cb009b385f895db9ca5b4d8265d8385b" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0006<br>             <b>Dirección:</b> calle 15 diag 23<br>             <b>Fecha:</b> 2026-01-21<br>             <b>Hora:</b> 18:22:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 2<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.178142,-72.551153"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_1527aa707f4318e939b1fe6c634b9dad.setContent(html_cb009b385f895db9ca5b4d8265d8385b);
+            
+        
+
+        circle_marker_d77d956c95e6e7c88eb1b8fd2033251f.bindPopup(popup_1527aa707f4318e939b1fe6c634b9dad)
+        ;
+
+        
+    
+    
+            circle_marker_d77d956c95e6e7c88eb1b8fd2033251f.bindTooltip(
+                `<div>
+                     Con Heridos | calle 15 diag 23
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c7957d52370113b4771d96fe7e383dce = L.circleMarker(
+                [5.179731, -72.564114],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_9ef337104b56c8339260a36e20433cce = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_a5a42c7c73a3f46c5bd7755dea68a1fa = $(`<div id="html_a5a42c7c73a3f46c5bd7755dea68a1fa" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0007<br>             <b>Dirección:</b> PR 78+200 RUTA 6512<br>             <b>Fecha:</b> 2026-01-25<br>             <b>Hora:</b> 5:25:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 1<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.179731,-72.564114"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_9ef337104b56c8339260a36e20433cce.setContent(html_a5a42c7c73a3f46c5bd7755dea68a1fa);
+            
+        
+
+        circle_marker_c7957d52370113b4771d96fe7e383dce.bindPopup(popup_9ef337104b56c8339260a36e20433cce)
+        ;
+
+        
+    
+    
+            circle_marker_c7957d52370113b4771d96fe7e383dce.bindTooltip(
+                `<div>
+                     Con Heridos | PR 78+200 RUTA 6512
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_36274e387214fa44b24dbdf660c71c98 = L.circleMarker(
+                [5.170394, -72.548614],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_09c071e8fb96ddd0c6cceaf59963dbb9 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_1cfb09d2df2b7ef0df1ed5236c83b98b = $(`<div id="html_1cfb09d2df2b7ef0df1ed5236c83b98b" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0009<br>             <b>Dirección:</b> calle 11 kra 15<br>             <b>Fecha:</b> 2026-02-01<br>             <b>Hora:</b> 21:10:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.170394,-72.548614"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_09c071e8fb96ddd0c6cceaf59963dbb9.setContent(html_1cfb09d2df2b7ef0df1ed5236c83b98b);
+            
+        
+
+        circle_marker_36274e387214fa44b24dbdf660c71c98.bindPopup(popup_09c071e8fb96ddd0c6cceaf59963dbb9)
+        ;
+
+        
+    
+    
+            circle_marker_36274e387214fa44b24dbdf660c71c98.bindTooltip(
+                `<div>
+                     Con Heridos | calle 11 kra 15
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4f1371ecc6d2ac6f6a38e9da6fcf3904 = L.circleMarker(
+                [5.182808, -72.548058],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_ee6461cd3bc71b9e00ed136d82db5bfc = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_9fe4d3f69087b870af4c62549fd81cd8 = $(`<div id="html_9fe4d3f69087b870af4c62549fd81cd8" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0010<br>             <b>Dirección:</b> PR 79+950 RUTA 6512<br>             <b>Fecha:</b> 2026-02-05<br>             <b>Hora:</b> 14:00:00<br>             <b>Clase:</b> Caida De Vehículo a Precipicio<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.182808,-72.548058"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_ee6461cd3bc71b9e00ed136d82db5bfc.setContent(html_9fe4d3f69087b870af4c62549fd81cd8);
+            
+        
+
+        circle_marker_4f1371ecc6d2ac6f6a38e9da6fcf3904.bindPopup(popup_ee6461cd3bc71b9e00ed136d82db5bfc)
+        ;
+
+        
+    
+    
+            circle_marker_4f1371ecc6d2ac6f6a38e9da6fcf3904.bindTooltip(
+                `<div>
+                     Con Heridos | PR 79+950 RUTA 6512
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_74ace747f3cb5e9f0d68a12296a7ac08 = L.circleMarker(
+                [5.173036, -72.542769],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_5d665762512562de1e4b7b18951588ff = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_9e64dbf2e04a4033df8c396c869c6111 = $(`<div id="html_9e64dbf2e04a4033df8c396c869c6111" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0011<br>             <b>Dirección:</b> kra 12 calle 18<br>             <b>Fecha:</b> 2026-02-08<br>             <b>Hora:</b> 5:12:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.173036,-72.542769"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_5d665762512562de1e4b7b18951588ff.setContent(html_9e64dbf2e04a4033df8c396c869c6111);
+            
+        
+
+        circle_marker_74ace747f3cb5e9f0d68a12296a7ac08.bindPopup(popup_5d665762512562de1e4b7b18951588ff)
+        ;
+
+        
+    
+    
+            circle_marker_74ace747f3cb5e9f0d68a12296a7ac08.bindTooltip(
+                `<div>
+                     Con Heridos | kra 12 calle 18
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_353651d6fcdffe759271d382f3ca1cff = L.circleMarker(
+                [5.171781, -72.552319],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_238902338fc1291f5c85b48a2d721422 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_80bee04bd452ab5a2f566ec18e5b1d41 = $(`<div id="html_80bee04bd452ab5a2f566ec18e5b1d41" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0012<br>             <b>Dirección:</b> calle 9 carrera 20<br>             <b>Fecha:</b> 2026-02-17<br>             <b>Hora:</b> 17:45:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.171781,-72.552319"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_238902338fc1291f5c85b48a2d721422.setContent(html_80bee04bd452ab5a2f566ec18e5b1d41);
+            
+        
+
+        circle_marker_353651d6fcdffe759271d382f3ca1cff.bindPopup(popup_238902338fc1291f5c85b48a2d721422)
+        ;
+
+        
+    
+    
+            circle_marker_353651d6fcdffe759271d382f3ca1cff.bindTooltip(
+                `<div>
+                     Con Heridos | calle 9 carrera 20
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_43269d36cb13f9c99322612f5cb17b27 = L.circleMarker(
+                [5.169267, -72.550814],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_ab13420b85ccd8e6022235e8ddf22d51 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_f16a53eac727294ce1e7625c4cc35160 = $(`<div id="html_f16a53eac727294ce1e7625c4cc35160" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0013<br>             <b>Dirección:</b> calle 8 carrera 16<br>             <b>Fecha:</b> 2026-03-01<br>             <b>Hora:</b> 15:13:00<br>             <b>Clase:</b> Atropello<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.169267,-72.550814"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_ab13420b85ccd8e6022235e8ddf22d51.setContent(html_f16a53eac727294ce1e7625c4cc35160);
+            
+        
+
+        circle_marker_43269d36cb13f9c99322612f5cb17b27.bindPopup(popup_ab13420b85ccd8e6022235e8ddf22d51)
+        ;
+
+        
+    
+    
+            circle_marker_43269d36cb13f9c99322612f5cb17b27.bindTooltip(
+                `<div>
+                     Con Heridos | calle 8 carrera 16
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_50c899339313b9f9399663fcdac0fac6 = L.circleMarker(
+                [5.1, -72.469767],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_ccb7e008e260066935e7cafee8a8123b = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_2e91af842cefaa170e48c236f1834e53 = $(`<div id="html_2e91af842cefaa170e48c236f1834e53" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0014<br>             <b>Dirección:</b> Km 9 aguazul mani<br>             <b>Fecha:</b> 2026-02-25<br>             <b>Hora:</b> 21:19:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.1,-72.469767"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_ccb7e008e260066935e7cafee8a8123b.setContent(html_2e91af842cefaa170e48c236f1834e53);
+            
+        
+
+        circle_marker_50c899339313b9f9399663fcdac0fac6.bindPopup(popup_ccb7e008e260066935e7cafee8a8123b)
+        ;
+
+        
+    
+    
+            circle_marker_50c899339313b9f9399663fcdac0fac6.bindTooltip(
+                `<div>
+                     Con Heridos | Km 9 aguazul mani
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fa3774b5967731872e0c71f619437db8 = L.circleMarker(
+                [5.180556, -72.569167],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_382407ecccac134b0922683d47667746 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_47d3fde207926e63d679f7c56e6a93a5 = $(`<div id="html_47d3fde207926e63d679f7c56e6a93a5" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0015<br>             <b>Dirección:</b> km 77+500 ruta 6512<br>             <b>Fecha:</b> 2026-03-06<br>             <b>Hora:</b> 23:15:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.180556,-72.569167"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_382407ecccac134b0922683d47667746.setContent(html_47d3fde207926e63d679f7c56e6a93a5);
+            
+        
+
+        circle_marker_fa3774b5967731872e0c71f619437db8.bindPopup(popup_382407ecccac134b0922683d47667746)
+        ;
+
+        
+    
+    
+            circle_marker_fa3774b5967731872e0c71f619437db8.bindTooltip(
+                `<div>
+                     Con Heridos | km 77+500 ruta 6512
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e5209ef5edc1f676ae6c42ec7bed2a96 = L.circleMarker(
+                [5.097447, -72.460847],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_687706aef1cf7a3ddd47f31ba4135d1b = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_4f7b4564c707ffeaa6d0a9bc52a52244 = $(`<div id="html_4f7b4564c707ffeaa6d0a9bc52a52244" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0016<br>             <b>Dirección:</b> Km 12 aguazul mani calle 3a<br>             <b>Fecha:</b> 2026-03-09<br>             <b>Hora:</b> 20:17:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.097447,-72.460847"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_687706aef1cf7a3ddd47f31ba4135d1b.setContent(html_4f7b4564c707ffeaa6d0a9bc52a52244);
+            
+        
+
+        circle_marker_e5209ef5edc1f676ae6c42ec7bed2a96.bindPopup(popup_687706aef1cf7a3ddd47f31ba4135d1b)
+        ;
+
+        
+    
+    
+            circle_marker_e5209ef5edc1f676ae6c42ec7bed2a96.bindTooltip(
+                `<div>
+                     Con Heridos | Km 12 aguazul mani calle 3a
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3f5dfc0f859f03fa3b73b43d897377b3 = L.circleMarker(
+                [5.177297, -72.549097],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_54ec4efaadfbfbd5c7eb6972b644086c = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_cd4d90eae6f6e1f95b8a7d4aade06b53 = $(`<div id="html_cd4d90eae6f6e1f95b8a7d4aade06b53" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0017<br>             <b>Dirección:</b> carrera 22 calle 16<br>             <b>Fecha:</b> 2026-03-17<br>             <b>Hora:</b> 9:30:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.177297,-72.549097"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_54ec4efaadfbfbd5c7eb6972b644086c.setContent(html_cd4d90eae6f6e1f95b8a7d4aade06b53);
+            
+        
+
+        circle_marker_3f5dfc0f859f03fa3b73b43d897377b3.bindPopup(popup_54ec4efaadfbfbd5c7eb6972b644086c)
+        ;
+
+        
+    
+    
+            circle_marker_3f5dfc0f859f03fa3b73b43d897377b3.bindTooltip(
+                `<div>
+                     Con Heridos | carrera 22 calle 16
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_88f3da1cfc2dbde31947a12c1c5aa3d7 = L.circleMarker(
+                [5.167625, -72.550486],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_62dc367df16f193820e07cfb610fded9 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_de45398e14c08f676ea631157c8600df = $(`<div id="html_de45398e14c08f676ea631157c8600df" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0018<br>             <b>Dirección:</b> calle 7 carrera 14<br>             <b>Fecha:</b> 2026-03-19<br>             <b>Hora:</b> 3:56:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 1<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.167625,-72.550486"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_62dc367df16f193820e07cfb610fded9.setContent(html_de45398e14c08f676ea631157c8600df);
+            
+        
+
+        circle_marker_88f3da1cfc2dbde31947a12c1c5aa3d7.bindPopup(popup_62dc367df16f193820e07cfb610fded9)
+        ;
+
+        
+    
+    
+            circle_marker_88f3da1cfc2dbde31947a12c1c5aa3d7.bindTooltip(
+                `<div>
+                     Con Heridos | calle 7 carrera 14
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2d5595a2fbd91bd7876f55b9923a4035 = L.circleMarker(
+                [5.165947, -72.548828],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_598acc8574e9f8d2d1dc03330e9c622a = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_8563ca18b45d1af12cca639cf4ee2fe1 = $(`<div id="html_8563ca18b45d1af12cca639cf4ee2fe1" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0001<br>             <b>Dirección:</b> calle 7 con carrera 11<br>             <b>Fecha:</b> 2025-01-09<br>             <b>Hora:</b> 17:56:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 2<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.165947,-72.548828"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_598acc8574e9f8d2d1dc03330e9c622a.setContent(html_8563ca18b45d1af12cca639cf4ee2fe1);
+            
+        
+
+        circle_marker_2d5595a2fbd91bd7876f55b9923a4035.bindPopup(popup_598acc8574e9f8d2d1dc03330e9c622a)
+        ;
+
+        
+    
+    
+            circle_marker_2d5595a2fbd91bd7876f55b9923a4035.bindTooltip(
+                `<div>
+                     Con Heridos | calle 7 con carrera 11
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2d1e41479b78a8ab0cd82a709564eef5 = L.circleMarker(
+                [5.168864, -72.548222],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_50b46b470f53e01c0003f2e47a84e46b = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_ef672d204710fa392059cf6b11ffa616 = $(`<div id="html_ef672d204710fa392059cf6b11ffa616" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0002<br>             <b>Dirección:</b> calle 10 con carrera 13<br>             <b>Fecha:</b> 2025-01-12<br>             <b>Hora:</b> 17:40:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 2<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.168864,-72.548222"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_50b46b470f53e01c0003f2e47a84e46b.setContent(html_ef672d204710fa392059cf6b11ffa616);
+            
+        
+
+        circle_marker_2d1e41479b78a8ab0cd82a709564eef5.bindPopup(popup_50b46b470f53e01c0003f2e47a84e46b)
+        ;
+
+        
+    
+    
+            circle_marker_2d1e41479b78a8ab0cd82a709564eef5.bindTooltip(
+                `<div>
+                     Con Heridos | calle 10 con carrera 13
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2d99194de925b13f9148aec9cc7917f6 = L.circleMarker(
+                [5.176506, -72.5445],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_380972a699d1bda48a6748ea932315c9 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_882aea98c2946cc708595876dff99d61 = $(`<div id="html_882aea98c2946cc708595876dff99d61" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0003<br>             <b>Dirección:</b> carrera 17 con calle 19<br>             <b>Fecha:</b> 2025-01-24<br>             <b>Hora:</b> 8:00:00<br>             <b>Clase:</b> Atropello<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.176506,-72.5445"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_380972a699d1bda48a6748ea932315c9.setContent(html_882aea98c2946cc708595876dff99d61);
+            
+        
+
+        circle_marker_2d99194de925b13f9148aec9cc7917f6.bindPopup(popup_380972a699d1bda48a6748ea932315c9)
+        ;
+
+        
+    
+    
+            circle_marker_2d99194de925b13f9148aec9cc7917f6.bindTooltip(
+                `<div>
+                     Con Heridos | carrera 17 con calle 19
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bcc0ec6696c14cbebed6085bfce34b1d = L.circleMarker(
+                [5.178092, -72.550983],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_cd283d3aa6bc29f8dc4a74927d84faec = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_ce8d2eab8de7f97c9b2fbf2f81fd7a84 = $(`<div id="html_ce8d2eab8de7f97c9b2fbf2f81fd7a84" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0004<br>             <b>Dirección:</b> calle 15 con calle 24<br>             <b>Fecha:</b> 2025-01-26<br>             <b>Hora:</b> 19:00:00<br>             <b>Clase:</b> Atropello<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.178092,-72.550983"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_cd283d3aa6bc29f8dc4a74927d84faec.setContent(html_ce8d2eab8de7f97c9b2fbf2f81fd7a84);
+            
+        
+
+        circle_marker_bcc0ec6696c14cbebed6085bfce34b1d.bindPopup(popup_cd283d3aa6bc29f8dc4a74927d84faec)
+        ;
+
+        
+    
+    
+            circle_marker_bcc0ec6696c14cbebed6085bfce34b1d.bindTooltip(
+                `<div>
+                     Con Heridos | calle 15 con calle 24
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1b0b4578ab2ab887b8895c0d09717c86 = L.circleMarker(
+                [5.179769, -72.563592],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_ac86d254c8fac3066605410280c58a71 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_ec082485872b180459e03fe72f8fde3b = $(`<div id="html_ec082485872b180459e03fe72f8fde3b" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0006<br>             <b>Dirección:</b> km 78 + 100<br>             <b>Fecha:</b> 2025-01-27<br>             <b>Hora:</b> 21:05:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.179769,-72.563592"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_ac86d254c8fac3066605410280c58a71.setContent(html_ec082485872b180459e03fe72f8fde3b);
+            
+        
+
+        circle_marker_1b0b4578ab2ab887b8895c0d09717c86.bindPopup(popup_ac86d254c8fac3066605410280c58a71)
+        ;
+
+        
+    
+    
+            circle_marker_1b0b4578ab2ab887b8895c0d09717c86.bindTooltip(
+                `<div>
+                     Con Heridos | km 78 + 100
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_756f6a94aa307dfae4e893422a88d0ff = L.circleMarker(
+                [5.168131, -72.550992],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_d111991e064e92ebe2f94516c5a32a55 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_14553b00e3020eac78e7db183ece0748 = $(`<div id="html_14553b00e3020eac78e7db183ece0748" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0007<br>             <b>Dirección:</b> calle 7 con carrera 15<br>             <b>Fecha:</b> 2025-01-31<br>             <b>Hora:</b> 19:50:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.168131,-72.550992"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_d111991e064e92ebe2f94516c5a32a55.setContent(html_14553b00e3020eac78e7db183ece0748);
+            
+        
+
+        circle_marker_756f6a94aa307dfae4e893422a88d0ff.bindPopup(popup_d111991e064e92ebe2f94516c5a32a55)
+        ;
+
+        
+    
+    
+            circle_marker_756f6a94aa307dfae4e893422a88d0ff.bindTooltip(
+                `<div>
+                     Con Heridos | calle 7 con carrera 15
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5af25a228d843f6035a9a3a3b8bb130b = L.circleMarker(
+                [5.169981, -72.545772],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_88a7192baaf801d546af45a9c0af4b37 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_bc562946e252750b8f9521f354137836 = $(`<div id="html_bc562946e252750b8f9521f354137836" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0008<br>             <b>Dirección:</b> calle 13 con carrera 11<br>             <b>Fecha:</b> 2025-02-12<br>             <b>Hora:</b> 9:50:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 2<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.169981,-72.545772"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_88a7192baaf801d546af45a9c0af4b37.setContent(html_bc562946e252750b8f9521f354137836);
+            
+        
+
+        circle_marker_5af25a228d843f6035a9a3a3b8bb130b.bindPopup(popup_88a7192baaf801d546af45a9c0af4b37)
+        ;
+
+        
+    
+    
+            circle_marker_5af25a228d843f6035a9a3a3b8bb130b.bindTooltip(
+                `<div>
+                     Con Heridos | calle 13 con carrera 11
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_292ff7c4594ceb4dfa0edc0fe3deccfd = L.circleMarker(
+                [5.178464, -72.546811],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_8b08db60d9aa4aa18505541c0cd757e9 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_d7c2ebdbd23151c88c4f58aad481e474 = $(`<div id="html_d7c2ebdbd23151c88c4f58aad481e474" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0009<br>             <b>Dirección:</b> carrera 21con calle 18a<br>             <b>Fecha:</b> 2025-02-13<br>             <b>Hora:</b> 20:30:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.178464,-72.546811"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_8b08db60d9aa4aa18505541c0cd757e9.setContent(html_d7c2ebdbd23151c88c4f58aad481e474);
+            
+        
+
+        circle_marker_292ff7c4594ceb4dfa0edc0fe3deccfd.bindPopup(popup_8b08db60d9aa4aa18505541c0cd757e9)
+        ;
+
+        
+    
+    
+            circle_marker_292ff7c4594ceb4dfa0edc0fe3deccfd.bindTooltip(
+                `<div>
+                     Con Heridos | carrera 21con calle 18a
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8a4f1282b7dcbd322bff6bb60b0787ed = L.circleMarker(
+                [5.176506, -72.5445],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_e4e8b4c282aa67b0accce952e9204ffb = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_2395531cb9ca8c099ad9c3355f3f7d49 = $(`<div id="html_2395531cb9ca8c099ad9c3355f3f7d49" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0010<br>             <b>Dirección:</b> carrera 17 con calle 19<br>             <b>Fecha:</b> 2025-02-24<br>             <b>Hora:</b> 10:45:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 2<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.176506,-72.5445"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_e4e8b4c282aa67b0accce952e9204ffb.setContent(html_2395531cb9ca8c099ad9c3355f3f7d49);
+            
+        
+
+        circle_marker_8a4f1282b7dcbd322bff6bb60b0787ed.bindPopup(popup_e4e8b4c282aa67b0accce952e9204ffb)
+        ;
+
+        
+    
+    
+            circle_marker_8a4f1282b7dcbd322bff6bb60b0787ed.bindTooltip(
+                `<div>
+                     Con Heridos | carrera 17 con calle 19
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1de2cecac3a813f1f94ab317fa40a041 = L.circleMarker(
+                [5.174533, -72.546506],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_321409bbd563b8cb848b0b4dbff67978 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_3b4dc70a5305214e60966dd77757cab1 = $(`<div id="html_3b4dc70a5305214e60966dd77757cab1" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0011<br>             <b>Dirección:</b> calle 16 con carrera 17<br>             <b>Fecha:</b> 2025-03-02<br>             <b>Hora:</b> 5:30:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 2<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.174533,-72.546506"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_321409bbd563b8cb848b0b4dbff67978.setContent(html_3b4dc70a5305214e60966dd77757cab1);
+            
+        
+
+        circle_marker_1de2cecac3a813f1f94ab317fa40a041.bindPopup(popup_321409bbd563b8cb848b0b4dbff67978)
+        ;
+
+        
+    
+    
+            circle_marker_1de2cecac3a813f1f94ab317fa40a041.bindTooltip(
+                `<div>
+                     Con Heridos | calle 16 con carrera 17
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cd911cd7b6ab73c9c66f35aad9bfb878 = L.circleMarker(
+                [5.170589, -72.551197],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_f98301abfe673e699adff7ca470f24b0 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_b67e7c92f2315eb8ac609056f136dbe7 = $(`<div id="html_b67e7c92f2315eb8ac609056f136dbe7" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0012<br>             <b>Dirección:</b> calle 9 con carrera 18<br>             <b>Fecha:</b> 2025-03-15<br>             <b>Hora:</b> 3:15:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.170589,-72.551197"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_f98301abfe673e699adff7ca470f24b0.setContent(html_b67e7c92f2315eb8ac609056f136dbe7);
+            
+        
+
+        circle_marker_cd911cd7b6ab73c9c66f35aad9bfb878.bindPopup(popup_f98301abfe673e699adff7ca470f24b0)
+        ;
+
+        
+    
+    
+            circle_marker_cd911cd7b6ab73c9c66f35aad9bfb878.bindTooltip(
+                `<div>
+                     Con Heridos | calle 9 con carrera 18
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_75cd5a3e600b15de54c6954dccce9dc2 = L.circleMarker(
+                [5.180936, -72.553778],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_3073840c3638b279ec3d50e40205acb9 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_c3030dca02ae51213055bfaea5959026 = $(`<div id="html_c3030dca02ae51213055bfaea5959026" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0013<br>             <b>Dirección:</b> pr 79 + 250<br>             <b>Fecha:</b> 2025-05-07<br>             <b>Hora:</b> 22:30:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.180936,-72.553778"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_3073840c3638b279ec3d50e40205acb9.setContent(html_c3030dca02ae51213055bfaea5959026);
+            
+        
+
+        circle_marker_75cd5a3e600b15de54c6954dccce9dc2.bindPopup(popup_3073840c3638b279ec3d50e40205acb9)
+        ;
+
+        
+    
+    
+            circle_marker_75cd5a3e600b15de54c6954dccce9dc2.bindTooltip(
+                `<div>
+                     Con Heridos | pr 79 + 250
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3af2baf0671b19ebf66cd932265f1ecd = L.circleMarker(
+                [5.167642, -72.548428],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_882eb536e60d6a7ad36eeaefe5c683cb = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_073472b741611f13c605e8361691142f = $(`<div id="html_073472b741611f13c605e8361691142f" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0014<br>             <b>Dirección:</b> calle 9 con carrera 12<br>             <b>Fecha:</b> 2025-09-08<br>             <b>Hora:</b> 14:00:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.167642,-72.548428"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_882eb536e60d6a7ad36eeaefe5c683cb.setContent(html_073472b741611f13c605e8361691142f);
+            
+        
+
+        circle_marker_3af2baf0671b19ebf66cd932265f1ecd.bindPopup(popup_882eb536e60d6a7ad36eeaefe5c683cb)
+        ;
+
+        
+    
+    
+            circle_marker_3af2baf0671b19ebf66cd932265f1ecd.bindTooltip(
+                `<div>
+                     Con Heridos | calle 9 con carrera 12
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_63a8d3f89225d3f328536ddbbef16354 = L.circleMarker(
+                [5.173256, -72.547747],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e);
+        
+    
+        var popup_094b222e2def17b7852ac8ec2fe62e3a = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_8d8679f767a4c89cd55edd7f9539219b = $(`<div id="html_8d8679f767a4c89cd55edd7f9539219b" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FF8C00;font-size:14px">⚠ Con Heridos</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2025-0016<br>             <b>Dirección:</b> carrera 17 con calle 14<br>             <b>Fecha:</b> 2025-02-19<br>             <b>Hora:</b> 21:00:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 1<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.173256,-72.547747"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_094b222e2def17b7852ac8ec2fe62e3a.setContent(html_8d8679f767a4c89cd55edd7f9539219b);
+            
+        
+
+        circle_marker_63a8d3f89225d3f328536ddbbef16354.bindPopup(popup_094b222e2def17b7852ac8ec2fe62e3a)
+        ;
+
+        
+    
+    
+            circle_marker_63a8d3f89225d3f328536ddbbef16354.bindTooltip(
+                `<div>
+                     Con Heridos | carrera 17 con calle 14
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e.addTo(map_f2c28255bfb6bcea507dffb39d237282);
+        
+    
+            var feature_group_4d4e936ca475cdd0d39eda53ab9a6e9a = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_63ba2b4b1123b1b3874c1c4063fcbb47 = L.circleMarker(
+                [5.1761, -72.549156],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFD700", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d4e936ca475cdd0d39eda53ab9a6e9a);
+        
+    
+        var popup_24ddb7de7669431d5bc947de1fda5cf1 = L.popup({
+  "maxWidth": 270,
+});
+
+        
+            
+                var html_8cc999e18c35e8a91369e0033270eb06 = $(`<div id="html_8cc999e18c35e8a91369e0033270eb06" style="width: 100.0%; height: 100.0%;">         <div style="font-family:Arial;font-size:13px;min-width:220px">             <b style="color:#FFD700;font-size:14px">⚠ Solo Daños</b><br>             <hr style="margin:4px 0">             <b>Código:</b> 2026-0008<br>             <b>Dirección:</b> calle 15 kra 21<br>             <b>Fecha:</b> 2026-01-29<br>             <b>Hora:</b> 0:55:00<br>             <b>Clase:</b> Choque<br>             <b>Muertos:</b> 0<br>             <b>Heridos:</b> 0<br>             <hr style="margin:4px 0">             <a href="https://www.google.com/maps?q=5.1761,-72.549156"                target="_blank" style="color:#1a73e8">                📍 Ver en Google Maps / Street View             </a>         </div>         </div>`)[0];
+                popup_24ddb7de7669431d5bc947de1fda5cf1.setContent(html_8cc999e18c35e8a91369e0033270eb06);
+            
+        
+
+        circle_marker_63ba2b4b1123b1b3874c1c4063fcbb47.bindPopup(popup_24ddb7de7669431d5bc947de1fda5cf1)
+        ;
+
+        
+    
+    
+            circle_marker_63ba2b4b1123b1b3874c1c4063fcbb47.bindTooltip(
+                `<div>
+                     Solo Daños | calle 15 kra 21
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_4d4e936ca475cdd0d39eda53ab9a6e9a.addTo(map_f2c28255bfb6bcea507dffb39d237282);
+        
+    
+            var layer_control_b256ef239a1a88c7b36966ba9155bde7_layers = {
+                base_layers : {
+                    "Calles (OpenStreetMap)" : tile_layer_058d91ca33ba51281345782ce5e4fa54,
+                    "Sat\u00e9lite (Esri)" : tile_layer_b66d2797a6874f27a0639ae52431a8f6,
+                    "Calles detalladas (Esri)" : tile_layer_0320a778cf7656ae8dc4279739392820,
+                },
+                overlays :  {
+                    "\ud83d\udd25 Mapa de Calor" : heat_map_d4f12cddf20a056ca6190d24e91e1d95,
+                    "\ud83d\udd34 Con Muertos" : feature_group_3516b49559cb6abc1821852a6c82427c,
+                    "\ud83d\udfe0 Con Heridos" : feature_group_eb08fb9fc90c55e5c8d4ca0e27dc676e,
+                    "\ud83d\udfe1 Solo Da\u00f1os" : feature_group_4d4e936ca475cdd0d39eda53ab9a6e9a,
+                },
+            };
+            let layer_control_b256ef239a1a88c7b36966ba9155bde7 = L.control.layers(
+                layer_control_b256ef239a1a88c7b36966ba9155bde7_layers.base_layers,
+                layer_control_b256ef239a1a88c7b36966ba9155bde7_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_f2c28255bfb6bcea507dffb39d237282);
+
+        
+</script>
+</html>
